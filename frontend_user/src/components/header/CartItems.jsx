@@ -15,7 +15,7 @@ export const CartItems = ({ id, image, name, price, selectGoods, setTotalPrice, 
       if (item.id == id) index = ind;
     })
     setIdx(index);
-  }, []);
+  }, [selectGoods, setselectGoods, id]);
 
   const incCartitems = () => {
     // eslint-disable-next-line react/prop-types
@@ -39,7 +39,7 @@ export const CartItems = ({ id, image, name, price, selectGoods, setTotalPrice, 
       setTotalNumber(e => e - price);
       setselectGoods(e => {
         let data = e;
-        data[idx].number--;
+        data[idx].number && data[idx].number--;
         if (data[idx].number == 0) {
           message.info('已移除购物车')
           return data.filter(item => item.id != id);

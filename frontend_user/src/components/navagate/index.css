@@ -1,0 +1,18 @@
+.cover {
+  height: 30px;
+  line-height: 30px;
+  /* background-color: rgb(243, 243, 243); */
+  display: flex;
+  /* justify-content: center; */
+}
+
+.inner_cover {
+  display: flex;
+  margin-right: 130px;
+  margin-left: 45px;
+  margin-top: 30px;
+}
+
+.navi_item {
+  margin: 0 10px;
+}

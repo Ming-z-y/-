@@ -4,18 +4,18 @@ import { ProductCart } from "./ProductCart"
 import axios from '../../utils/request/request'
 
 // eslint-disable-next-line react/prop-types
-export const Product = ({ isSearch, search, setselectGoods, selectGoods }) => {
+export const Product = ({ isSearch, search, category, setselectGoods, selectGoods }) => {
   const [goods, setGoods] = useState([]);
   const [isElse, setIsElse] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`/goods?keyword=${search}`);
+      const res = await axios.get(`/goods?keyword=${search}&category=${category}`);
       setGoods(res.data || [])
       if (res.data.length != 0) setIsElse(true);
       else setIsElse(false);
     })()
-  }, [isSearch, search])
+  }, [isSearch, search, category])
 
   return (
     <>

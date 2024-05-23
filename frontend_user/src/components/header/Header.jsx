@@ -6,11 +6,14 @@ import { User } from "./User"
 import { Link } from "react-router-dom"
 
 // eslint-disable-next-line react/prop-types
-export const Header = ({ selectGoods, setIsSearch, setSearch, setselectGoods }) => {
+export const Header = ({ selectGoods, setIsSearch, setSearch, setselectGoods, setCategory }) => {
   const onkeyDown = (e) => {
     if (e.key == "Enter") {
+      console.log('xxx');
       setIsSearch(true);
       setSearch(e.target.value);
+      setCategory('')
+      e.target.value = '';
     }
   }
 
