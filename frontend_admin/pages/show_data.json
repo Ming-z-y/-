@@ -1,0 +1,47 @@
+{
+  "type": "page",
+  "title": "可视化展示",
+  "remark": null,
+  "name": "page-demo",
+  "initApi": "${API_HOST}/goods/total_and_sell",
+  "body": [
+    {
+      "type": "page",
+      "body": {
+        "type": "chart",
+        "config": {
+          "title": {
+            "left": 70,
+            "text": "总体数据"
+          },
+          "legend": {
+            "data": [
+              "line"
+            ]
+          },
+          "xAxis": {
+            "type": "category",
+            "data": "${resdata.name || []}",
+            "name": "商品名称"
+          },
+          "yAxis": {
+            "type": "value",
+            "name": "数量"
+          },
+          "series": [
+            {
+              "name": "折线1",
+              "data": "${resdata.buy_number || []}",
+              "type": "line"
+            },
+            {
+              "name": "折现2",
+              "data": "${resdata.total_number || []}",
+              "type": "line"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

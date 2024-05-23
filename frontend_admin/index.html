@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link rel="stylesheet" href="./sdk/sdk.css" />
+    <link rel="stylesheet" href="./sdk/helper.css" />
+    <link rel="stylesheet" href="./sdk/iconfont.css" />
+    <style>
+      html,
+      body,
+      .app-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" class="app-wrapper"></div>
+    <script src="./sdk/sdk.js"></script>
+    <script type="text/javascript">
+      (function () {
+        let amis = amisRequire("amis/embed");
+        const base_url = "http://127.0.0.1:3000";
+        // 通过替换下面这个配置来生成不同页面
+        let amisJSON = {
+          type: "page",
+          title: "自动售货系统",
+          style: {
+            width: "500px",
+            margin: "0 auto",
+            marginTop: "100px",
+          },
+          body: {
+            type: "form",
+            mode: "horizontal",
+            api: {
+              method: "post",
+              url: base_url + "/login",
+              data: {
+                account: "${account}",
+                password: "${password}",
+              },
+            },
+            body: [
+              {
+                label: "用户名",
+                type: "input-text",
+                name: "account",
+                required: true,
+              },
+              {
+                label: "密码",
+                type: "input-password",
+                name: "password",
+                required: true,
+              },
+            ],
+            redirect: "./page.html",
+          },
+        };
+        let amisScoped = amis.embed("#root", amisJSON);
+      })();
+    </script>
+  </body>
+</html>
