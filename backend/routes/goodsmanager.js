@@ -47,4 +47,39 @@ router.get('/category', function (req, res) {
   })
 })
 
+router.post('/add', function (req, res) {
+  const { uid, gid, g_number } = req.body;
+  db.query(`select * from cart where uid = ${uid} AND gid = ${gid}`,
+    [], (response) => {
+      if (response.length == 0 && g_number > 0) {
+        db.query(`insert into cart values (${uid},${gid},${g_number})`)
+        res.send({ status: 0, msg: "操作成功" })
+      } else {
+        const rest_number = response[0].g_number + g_number;
+        if (rest_number == 0) {
+          db.query(`delete from cart where uid = ${uid} AND gid = ${gid}`)
+        } else {
+          db.query(`update cart set g_number = ${rest_number}
+          where uid = ${uid} AND gid = ${gid}`)
+          res.send({ status: 0, msg: "操作成功" })
+        }
+      }
+    }
+  )
+})
+
+router.post('/getcart', function (req, res) {
+  const { uid } = req.body;
+  db.query(`select gid,g_number from cart where uid = ${uid}`, [], (response) => {
+    const resData = [];
+    response.forEach((item, idx) => {
+      db.query(`select * from goods where id = ${item.gid}`, [], (respon) => {
+        resData.push({ ...respon[0], number: item.g_number });
+        if (idx == response.length - 1)
+          res.send({ status: 0, data: resData });
+      })
+    })
+  })
+})
+
 module.exports = router;

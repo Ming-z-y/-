@@ -171,7 +171,7 @@ header {
 .cartContent .price {
   margin-top: 10px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .cartContent .price .num {
   font-size: 17px;
@@ -259,4 +259,6 @@ header.active {
 }
 .profile a {
   text-decoration: none;
+}
+.pay_the_bill {
 }

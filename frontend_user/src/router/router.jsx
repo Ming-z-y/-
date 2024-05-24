@@ -1,10 +1,13 @@
 import { Login, Home } from "../pages";
-// import { Navigate } from "react-router-dom";
 
 export default [
   {
     path: "/",
-    element: <Login />,
+    element: localStorage.getItem('uid') ? <Home /> : <Login />,
+  },
+  {
+    path: "/login",
+    element: <Login />
   },
   {
     path: "/home",

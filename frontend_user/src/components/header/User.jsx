@@ -5,9 +5,11 @@ import { AiOutlineHeart } from "react-icons/ai"
 import { GrHelp } from "react-icons/gr"
 import { BiLogOut } from "react-icons/bi"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export const User = () => {
   const user = true
+  const navi = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false)
 
   const close = () => {
@@ -15,7 +17,8 @@ export const User = () => {
   }
 
   const logoutHandler = () => {
-
+    localStorage.removeItem('uid');
+    navi("/");
   }
 
   return (
@@ -43,7 +46,7 @@ export const User = () => {
                 <Link to='/login'>
                   <button className='box'>
                     <IoSettingsOutline className='icon' />
-                    <h4>My Account</h4>
+                    <h4>My Account: $100</h4>
                   </button>
                 </Link>
                 <button className='box'>

@@ -13,10 +13,13 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (account != 'user' && password != 'user') {
-      message.info('用户名或密码错误')
-    } else navi('/home')
-    // axios.post('/login', )
+    const res = (await axios.post("/login", { account, password })).data;
+    if (res.status == 0) {
+      localStorage.setItem('uid', res?.data?.uid);
+      navi('/home')
+    } else {
+      message.info('用户名或密码错误');
+    }
   }
   return (
     <>

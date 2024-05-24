@@ -1,12 +1,13 @@
 import { message } from "antd";
 import { useEffect, useState } from "react"
 import { AiOutlineClose, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"
+import axios from '../../utils/request/request'
 
 // eslint-disable-next-line react/prop-types
-export const CartItems = ({ id, image, name, price, selectGoods, setTotalPrice, setselectGoods }) => {
-  const [number, setNumber] = useState(1);
+export const CartItems = ({ id, image, name, price, selectGoods, setTotalPrice, quantity, setselectGoods }) => {
+  const [number, setNumber] = useState(quantity);
   const [idx, setIdx] = useState(0);
-  const [totalNumber, setTotalNumber] = useState(price);
+  const [totalNumber, setTotalNumber] = useState(price * quantity);
 
   useEffect(() => {
     let index = 0;
@@ -17,36 +18,50 @@ export const CartItems = ({ id, image, name, price, selectGoods, setTotalPrice, 
     setIdx(index);
   }, [selectGoods, setselectGoods, id]);
 
-  const incCartitems = () => {
+  const incCartitems = async () => {
     // eslint-disable-next-line react/prop-types
     if (number == selectGoods[idx].total_number - selectGoods[idx].buy_number) {
       message.info('没有多余库存了')
       return;
     }
-    setNumber(e => e + 1);
-    setselectGoods(e => {
-      let data = e;
-      data[idx].number++;
-      return data;
-    })
-    setTotalNumber(e => e + price);
-    setTotalPrice(e => e + price);
-  }
-
-  const descCartitems = () => {
-    if (number >= 1) {
-      setNumber(e => e - 1);
-      setTotalNumber(e => e - price);
+    const res = (await axios.post("/goods/add", {
+      uid: localStorage.getItem('uid'),
+      gid: id,
+      g_number: 1
+    })).data;
+    if (res.status == 0) {
+      setNumber(e => e + 1);
       setselectGoods(e => {
         let data = e;
-        data[idx].number && data[idx].number--;
-        if (data[idx].number == 0) {
-          message.info('已移除购物车')
-          return data.filter(item => item.id != id);
-        }
+        data[idx].number++;
         return data;
       })
-      setTotalPrice(e => e - price)
+      setTotalNumber(e => e + price);
+      setTotalPrice(e => e + price);
+    }
+  }
+
+  const descCartitems = async () => {
+    if (number >= 1) {
+      const res = (await axios.post("/goods/add", {
+        uid: localStorage.getItem('uid'),
+        gid: id,
+        g_number: -1
+      })).data;
+      if (res.status == 0) {
+        setNumber(e => e - 1);
+        setTotalNumber(e => e - price);
+        setselectGoods(e => {
+          let data = e;
+          data[idx].number && data[idx].number--;
+          if (data[idx].number == 0) {
+            message.info('已移除购物车')
+            return data.filter(item => item.id != id);
+          }
+          return data;
+        })
+        setTotalPrice(e => e - price)
+      }
     }
   }
 

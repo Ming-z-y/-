@@ -8,14 +8,14 @@
         "children": [
           {
             "label": "可视化展示",
-            "url": "/front/page.html",
-            "schemaApi": "get:/front/pages/show_data.json"
+            "url": "/frontend_admin/page.html",
+            "schemaApi": "get:/frontend_admin/pages/show_data.json"
           },
           {
             "label": "商品管理",
             "badge": 3,
             "badgeClassName": "bg-info",
-            "schemaApi": "get:/front/pages/curd.json"
+            "schemaApi": "get:/frontend_admin/pages/curd.json"
           }
         ]
       }

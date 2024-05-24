@@ -6,8 +6,16 @@ const db = require('../db')
 router.post('/', function (req, res, next) {
   db.query('select * from user', [], (response, fields) => {
     const data = req.body;
-    if (response[0].account == data.account && response[0].password == data.password) {
-      res.send({ status: 0, msg: "登陆成功", data: {} })
+    let isFind = false;
+    let uid = -1;
+    response.forEach(item => {
+      if (item.account == data.account && item.password == data.password) {
+        uid = item.uid;
+        isFind = true;
+      }
+    })
+    if (isFind) {
+      res.send({ status: 0, msg: "登陆成功", data: { uid } })
     } else {
       res.send({ status: 1, msg: "用户名或者密码错误", data: {} })
     }

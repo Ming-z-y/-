@@ -3,12 +3,24 @@ import { BiShoppingBag } from "react-icons/bi"
 import { AiOutlineClose } from "react-icons/ai"
 // eslint-disable-next-line no-unused-vars
 import { CartItems } from "./CartItems"
+import axios from "../../utils/request/request"
 
 // eslint-disable-next-line react/prop-types
 export const Card = ({ selectGoods, setselectGoods }) => {
   const [cardOpen, setCardOpen] = useState(false)
 
   const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      const res = (await axios.post("/goods/getcart", {
+        uid: localStorage.getItem('uid')
+      })).data;
+      if (res.status == 0) {
+        setselectGoods(res.data);
+      }
+    })()
+  }, [])
 
   useEffect(() => {
     let totalP = 0;
@@ -20,10 +32,12 @@ export const Card = ({ selectGoods, setselectGoods }) => {
   }, [selectGoods])
 
   const closeCard = () => {
-    setCardOpen(null)
+    setCardOpen(false)
   }
 
   const payTheBill = () => {
+    setCardOpen(false);
+
     console.log(selectGoods)
   }
 
