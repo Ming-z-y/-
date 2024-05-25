@@ -8,8 +8,14 @@ export const Home = () => {
   const [category, setCategory] = useState('');
   return (
     <>
-      <Header setCategory={setCategory} selectGoods={selectGoods} setselectGoods={setselectGoods} setIsSearch={setIsSearch} setSearch={setSearch} />
-      <Navagate setSearch={setSearch} setIsSearch={setIsSearch} setSeCategory={setCategory} />
+      <div style={{
+        position: "sticky",
+        top: 0,
+        left: 0
+      }}>
+        <Header setCategory={setCategory} selectGoods={selectGoods} setselectGoods={setselectGoods} setIsSearch={setIsSearch} setSearch={setSearch} />
+        <Navagate setSearch={setSearch} setIsSearch={setIsSearch} setSeCategory={setCategory} />
+      </div>
       <Product category={category} isSearch={isSearch} selectGoods={selectGoods} search={search} setselectGoods={setselectGoods} />
     </>
   )

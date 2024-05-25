@@ -19,7 +19,11 @@ export const Header = ({ selectGoods, setIsSearch, setSearch, setselectGoods, se
 
   return (
     <>
-      <header className='header'>
+      <header className='header' style={{
+        position: "sticky",
+        top: 0,
+        left: 0
+      }}>
         <div className='scontainer flex'>
           <div className='logo'>
             <Link to='/home'>

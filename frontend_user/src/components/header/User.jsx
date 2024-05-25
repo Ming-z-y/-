@@ -18,7 +18,7 @@ export const User = () => {
 
   const logoutHandler = () => {
     localStorage.removeItem('uid');
-    navi("/");
+    // navi("/");
   }
 
   return (
@@ -39,7 +39,7 @@ export const User = () => {
                     </div>
                   </Link>
                   <div className='text'>
-                    <h4>Eden Smith</h4>
+                    <h4>{localStorage.getItem('account')}</h4>
                     <label htmlFor=''>Los Angeles,CA</label>
                   </div>
                 </div>

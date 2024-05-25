@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
     })
   } else if (req.query.keyword != '' && req.query.keyword != null) {
     const key = req.query.keyword;
-    db.query(`select * from goods where name like '${key}%'`, [], (response) => {
+    db.query(`select * from goods where locate("${key}",name)>0`, [], (response) => {
       res.send(response)
     })
   } else if (req.query.category != '' || req.query.category != null) {
@@ -58,6 +58,7 @@ router.post('/add', function (req, res) {
         const rest_number = response[0].g_number + g_number;
         if (rest_number == 0) {
           db.query(`delete from cart where uid = ${uid} AND gid = ${gid}`)
+          res.send({ status: 0, msg: "操作成功" })
         } else {
           db.query(`update cart set g_number = ${rest_number}
           where uid = ${uid} AND gid = ${gid}`)
@@ -66,6 +67,13 @@ router.post('/add', function (req, res) {
       }
     }
   )
+})
+
+router.post('/deletecart', function (req, res) {
+  const { uid, gid } = req.body;
+  db.query(`delete from cart where uid = ${uid} AND gid = ${gid}`, [], (response) => {
+    res.send({ status: 0, msg: "操作成功" });
+  })
 })
 
 router.post('/getcart', function (req, res) {
@@ -79,6 +87,30 @@ router.post('/getcart', function (req, res) {
           res.send({ status: 0, data: resData });
       })
     })
+  })
+})
+
+router.post('/deletegoods', function (req, res) {
+  const { gid } = req.body;
+  db.query(`delete from goods where id = ${gid}`, [], () => {
+    db.query(`delete from cart where gid = ${gid}`, [], () => {
+      res.send({ status: 0, msg: "操作成功" })
+    })
+  })
+})
+
+router.post('/modifygoods', function (req, res) {
+  const { gid, price, total_number, image, category } = req.body;
+  db.query(`update goods set price = ${price}, total_number = ${total_number}, image = '${image}', category = '${category}' where id = ${gid}`, [], (response) => {
+    res.send({ status: 0, msg: "修改成功" })
+  })
+})
+
+router.post('/addgoods', function (req, res) {
+  const { name, price, total_number, image, category } = req.body;
+  db.query(`insert into goods(name,price,total_number,buy_number,canbe_delete,image,category) 
+  values ('${name}',${price},${total_number},0,0,'${image}','${category}')`, [], (response) => {
+    res.send({ status: 0, msg: "添加商品成功" })
   })
 })
 

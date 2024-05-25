@@ -18,8 +18,8 @@ module.exports = {
         //将查询出来的数据返回给回调函数
         callback &&
           callback(
-            JSON.parse(JSON.stringify(results)),
-            JSON.parse(JSON.stringify(fields))
+            results ? JSON.parse(JSON.stringify(results)) : null,
+            fields ? JSON.parse(JSON.stringify(fields)) : null
           )
         //停止链接数据库，必须在查询语句后，要不然一调用这个方法，就直接停止链接，数据操作就会失败
         connection.end(function (err) {

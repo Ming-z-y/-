@@ -65,11 +65,24 @@ export const CartItems = ({ id, image, name, price, selectGoods, setTotalPrice, 
     }
   }
 
+  const removeitem = async () => {
+    const res = (await (axios.post("/goods/deletecart", { uid: localStorage.getItem('uid'), gid: id }))).data;
+    if (res.status == 0) {
+      setselectGoods(e => {
+        let data = e;
+        data[idx].number = 0;
+        return data.filter(item => item.id != id);
+      })
+      setTotalPrice(e => e - price * quantity)
+      message.info('已移除购物车');
+    }
+  }
+
   return (
     <>
       <div className='cardList' key={id}>
         <div className='cartContent'>
-          <div className='img'>
+          <div className='img' onClick={() => { removeitem() }}>
             <img src={image} alt='' />
             <button className='remove flexCenter'>
               <AiOutlineClose />

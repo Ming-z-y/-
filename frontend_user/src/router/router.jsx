@@ -3,7 +3,8 @@ import { Login, Home } from "../pages";
 export default [
   {
     path: "/",
-    element: localStorage.getItem('uid') ? <Home /> : <Login />,
+    // element: localStorage.getItem('uid') ? <Home /> : <Login />,
+    element: <Login />
   },
   {
     path: "/login",

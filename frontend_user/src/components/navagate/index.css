@@ -1,16 +1,17 @@
 .cover {
-  height: 30px;
-  line-height: 30px;
-  /* background-color: rgb(243, 243, 243); */
   display: flex;
+  align-items: center;
   /* justify-content: center; */
+  background-color: #f9f9f9;
+  z-index: 99999;
+  padding: 20px 0;
 }
 
 .inner_cover {
   display: flex;
   margin-right: 130px;
   margin-left: 45px;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 .navi_item {
