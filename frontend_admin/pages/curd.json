@@ -6,10 +6,69 @@
   "toolbar": [
     {
       "type": "button",
-      "actionType": "link",
-      "link": "/crud/new",
       "label": "新增",
-      "primary": true
+      "level": "info",
+      "actionType": "dialog",
+      "dialog": {
+        "title": "新增商品",
+        "body": {
+          "type": "form",
+          "mode": "horizontal",
+          "api": {
+            "method": "post",
+            "url": "${API_HOST}/goods/addgoods",
+            "data": {
+              "name": "${name}",
+              "price": "${price}",
+              "total_number": "${total_number}",
+              "image": "${image}",
+              "category": "${category}"
+            }
+          },
+          "rules": [
+            {
+              "rule": "total_number >= 1",
+              "message": "商品数量至少是一个"
+            },
+            {
+              "rule": "price > 0",
+              "message": "价格不能为负数！"
+            }
+          ],
+          "body": [
+            {
+              "label": "商品名称",
+              "type": "input-text",
+              "name": "name",
+              "required": true
+            },
+            {
+              "label": "商品价格",
+              "type": "input-number",
+              "name": "price",
+              "required": true
+            },
+            {
+              "label": "上架数量",
+              "type": "input-number",
+              "name": "total_number",
+              "required": true
+            },
+            {
+              "label": "商品封面",
+              "type": "input-text",
+              "name": "image",
+              "required": true
+            },
+            {
+              "label": "商品类型",
+              "type": "input-text",
+              "name": "category",
+              "required": true
+            }
+          ]
+        }
+      }
     }
   ],
   "body": [
@@ -37,37 +96,6 @@
         ],
         "className": "m-b-sm"
       },
-      "bulkActions": [
-        {
-          "label": "批量修改",
-          "type": "button",
-          "actionType": "dialog",
-          "level": "primary",
-          "dialog": {
-            "title": "批量编辑",
-            "name": "sample-bulk-edit",
-            "body": {
-              "type": "form",
-              "api": "${API_HOST}/api/amis-mock/sample/bulkUpdate2",
-              "controls": [
-                {
-                  "type": "text",
-                  "name": "engine",
-                  "label": "Engine"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "label": "批量删除",
-          "type": "button",
-          "level": "danger",
-          "actionType": "ajax",
-          "api": "delete:${API_HOST}/api/amis-mock/sample/$ids",
-          "confirmText": "确定要批量删除?"
-        }
-      ],
       "columns": [
         {
           "name": "name",
@@ -101,16 +129,82 @@
                   "type": "button",
                   "label": "修改",
                   "level": "info",
-                  "actionType": "link",
-                  "link": "/crud/${id}/edit"
+                  "actionType": "dialog",
+                  "dialog": {
+                    "title": "修改商品信息",
+                    "body": {
+                      "type": "form",
+                      "mode": "horizontal",
+                      "api": {
+                        "method": "post",
+                        "url": "${API_HOST}/goods/modifygoods",
+                        "data": {
+                          "gid": "${id}",
+                          "price": "${price}",
+                          "total_number": "${total_number}",
+                          "image": "${image}",
+                          "category": "${category}"
+                        }
+                      },
+                      "rules": [
+                        {
+                          "rule": "total_number >= 1",
+                          "message": "商品数量至少是一个"
+                        },
+                        {
+                          "rule": "price > 0",
+                          "message": "价格不能为负数！"
+                        }
+                      ],
+                      "body": [
+                        {
+                          "label": "商品价格",
+                          "type": "input-number",
+                          "name": "price",
+                          "required": true
+                        },
+                        {
+                          "label": "总数量",
+                          "type": "input-number",
+                          "name": "total_number",
+                          "required": true
+                        },
+                        {
+                          "label": "商品展示封面",
+                          "type": "input-text",
+                          "name": "image",
+                          "required": true
+                        },
+                        {
+                          "label": "商品类型",
+                          "type": "input-text",
+                          "name": "category",
+                          "required": true
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "submit",
+                          "label": "确认修改",
+                          "level": "primary"
+                        }
+                      ]
+                    }
+                  }
                 },
                 {
                   "type": "button",
-                  "label": "删除",
+                  "label": "下架",
                   "level": "danger",
                   "actionType": "ajax",
-                  "confirmText": "您确认要删除?",
-                  "api": "delete:${API_HOST}/api/amis-mock/sample/$id"
+                  "confirmText": "您确认要将此商品下架?",
+                  "api": {
+                    "method": "post",
+                    "url": "${API_HOST}/goods/deletegoods",
+                    "data": {
+                      "gid": "${id}"
+                    }
+                  }
                 }
               ]
             }
