@@ -7,7 +7,7 @@ import { BiLogOut } from "react-icons/bi"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 
-export const User = () => {
+export const User = ({ money }) => {
   const user = true
   const navi = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false)
@@ -18,7 +18,7 @@ export const User = () => {
 
   const logoutHandler = () => {
     localStorage.removeItem('uid');
-    // navi("/");
+    navi("/");
   }
 
   return (
@@ -31,7 +31,7 @@ export const User = () => {
             </button>
 
             {profileOpen && (
-              <div className='openProfile boxItems' onClick={close}>
+              <div className='openProfile boxItems' onClick={() => { }}>
                 <div className='image'>
                   <Link to='/account'>
                     <div className='img'>
@@ -43,23 +43,23 @@ export const User = () => {
                     <label htmlFor=''>Los Angeles,CA</label>
                   </div>
                 </div>
-                <Link to='/login'>
+                <div>
                   <button className='box'>
                     <IoSettingsOutline className='icon' />
-                    <h4>My Account: $100</h4>
+                    <h4>My Account: ${money}</h4>
                   </button>
-                </Link>
+                </div>
                 <button className='box'>
                   <BsBagCheck className='icon' />
                   <h4>My Order</h4>
                 </button>
+                <button className='box' onClick={(e) => e.preventDefault()}>
+                  <GrHelp className='icon' />
+                  <h4>My address</h4>
+                </button>
                 <button className='box'>
                   <AiOutlineHeart className='icon' />
                   <h4>Wishlist</h4>
-                </button>
-                <button className='box'>
-                  <GrHelp className='icon' />
-                  <h4>Help</h4>
                 </button>
                 <button className='box' onClick={logoutHandler}>
                   <BiLogOut className='icon' />

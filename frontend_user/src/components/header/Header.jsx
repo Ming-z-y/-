@@ -6,10 +6,9 @@ import { User } from "./User"
 import { Link } from "react-router-dom"
 
 // eslint-disable-next-line react/prop-types
-export const Header = ({ selectGoods, setIsSearch, setSearch, setselectGoods, setCategory }) => {
+export const Header = ({ setMoney, money, selectGoods, setIsSearch, setSearch, setselectGoods, setCategory }) => {
   const onkeyDown = (e) => {
     if (e.key == "Enter") {
-      console.log('xxx');
       setIsSearch(true);
       setSearch(e.target.value);
       setCategory('')
@@ -35,8 +34,8 @@ export const Header = ({ selectGoods, setIsSearch, setSearch, setselectGoods, se
             <input type='text' placeholder='Search...' onKeyDown={onkeyDown} />
           </div>
           <div className='account flexCenter'>
-            <Card setselectGoods={setselectGoods} selectGoods={selectGoods} />
-            <User />
+            <Card setMoney={setMoney} setselectGoods={setselectGoods} selectGoods={selectGoods} />
+            <User money={money} />
           </div>
         </div>
       </header>

@@ -6,6 +6,7 @@ export const Home = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
+  const [money, setMoney] = useState(localStorage.getItem('money'));
   return (
     <>
       <div style={{
@@ -13,7 +14,7 @@ export const Home = () => {
         top: 0,
         left: 0
       }}>
-        <Header setCategory={setCategory} selectGoods={selectGoods} setselectGoods={setselectGoods} setIsSearch={setIsSearch} setSearch={setSearch} />
+        <Header setMoney={setMoney} setCategory={setCategory} money={money} selectGoods={selectGoods} setselectGoods={setselectGoods} setIsSearch={setIsSearch} setSearch={setSearch} />
         <Navagate setSearch={setSearch} setIsSearch={setIsSearch} setSeCategory={setCategory} />
       </div>
       <Product category={category} isSearch={isSearch} selectGoods={selectGoods} search={search} setselectGoods={setselectGoods} />

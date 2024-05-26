@@ -4,9 +4,10 @@ import { AiOutlineClose } from "react-icons/ai"
 // eslint-disable-next-line no-unused-vars
 import { CartItems } from "./CartItems"
 import axios from "../../utils/request/request"
+import { message } from "antd"
 
 // eslint-disable-next-line react/prop-types
-export const Card = ({ selectGoods, setselectGoods }) => {
+export const Card = ({ setMoney, selectGoods, setselectGoods }) => {
   const [cardOpen, setCardOpen] = useState(false)
 
   const [totalPrice, setTotalPrice] = useState(0);
@@ -35,10 +36,19 @@ export const Card = ({ selectGoods, setselectGoods }) => {
     setCardOpen(false)
   }
 
-  const payTheBill = () => {
-    setCardOpen(false);
-
-    console.log(selectGoods)
+  const payTheBill = async () => {
+    if (localStorage.getItem('money') < totalPrice) return message.info('余额不足，请充值');
+    const res = (await axios.post('/goods/buy', {
+      uid: localStorage.getItem('uid'),
+      total_price: totalPrice,
+      selectGoods
+    })).data;
+    if (res.status == 0) {
+      setselectGoods([]);
+      message.success(res.msg);
+      setMoney(e => e - totalPrice);
+      localStorage.setItem('money', localStorage.getItem('money') - totalPrice);
+    }
   }
 
   return (

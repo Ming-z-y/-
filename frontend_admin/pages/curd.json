@@ -100,7 +100,8 @@
         {
           "name": "name",
           "label": "商品名称",
-          "sortable": true
+          "sortable": true,
+          "searchable": true
         },
         {
           "name": "price",

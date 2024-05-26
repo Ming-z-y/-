@@ -24,6 +24,7 @@ export const Login = () => {
       message.success('欢迎回来');
       localStorage.setItem('uid', res?.data?.uid);
       localStorage.setItem('account', res?.data?.account);
+      localStorage.setItem('money', res?.data?.money);
       navi('/home');
     } else {
       message.info('用户名或密码错误');
@@ -42,6 +43,7 @@ export const Login = () => {
     if (res.status == 0) {
       localStorage.setItem('uid', res?.data?.uid);
       localStorage.setItem('account', res?.data?.account);
+      localStorage.setItem('money', res?.data?.money)
       message.success('注册成功，已登录');
       navi('/home')
     } else {
@@ -57,7 +59,7 @@ export const Login = () => {
             <img src={back} alt='' />
             <div className='text'>
               <h3>Login</h3>
-              <h1>网上超市</h1>
+              <h1>网上超市系统</h1>
             </div>
           </div>
 
