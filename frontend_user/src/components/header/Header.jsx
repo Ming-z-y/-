@@ -1,4 +1,4 @@
-import Medicine from "../../assets/images/Medicine.svg"
+import Image from "../../assets/images/image.jpg"
 import "./header.css"
 import { AiOutlineSearch } from "react-icons/ai"
 import { Card } from "./Card"
@@ -26,7 +26,7 @@ export const Header = ({ setMoney, money, selectGoods, setIsSearch, setSearch, s
         <div className='scontainer flex'>
           <div className='logo'>
             <Link to='/home'>
-              <img src={Medicine} alt='Medicine' />
+              <img src={Image} alt='supermarket' style={{ width: 200 }} />
             </Link>
           </div>
           <div className='search flex'>
