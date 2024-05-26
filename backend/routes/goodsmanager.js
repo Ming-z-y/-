@@ -118,9 +118,9 @@ router.post('/buy', function (req, res) {
   const { uid, total_price, selectGoods } = req.body;
   db.query(`update user set money = money - ${total_price} where uid = ${uid}`, [], (rsp) => {
     selectGoods.forEach(item => {
-      const { total_number, id, image, name } = item;
-      db.query(`insert into orders VALUES (${uid},${total_number},${id},'${image}','${name}')`, [], () => {
-        db.query(`update goods set buy_number = buy_number - ${total_number} where id = ${id}`, [], (response) => {
+      const { number, id, image, name } = item;
+      db.query(`insert into orders VALUES (${uid},${number},${id},'${image}','${name}')`, [], () => {
+        db.query(`update goods set buy_number = buy_number + ${number} where id = ${id}`, [], (response) => {
           db.query(`delete from cart where uid = ${uid}`, [], () => {
             res.send({ status: 0, msg: "购买成功" })
           })
